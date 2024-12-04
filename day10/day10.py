@@ -1,5 +1,7 @@
+import math
 import time
 import numpy as np
+import turtle
 
 def main(lines):
     
@@ -186,10 +188,40 @@ def main(lines):
     
     sol = len(visited_pipes)
     
-    print(sol)
     print("Solution:", sol/2) # Sol = 6927
+    
+    # PART 1 Visualize
+    def rotate_coords(coords, angle):
+        # Function to rotate coordinates by a given angle
+        radian_angle = math.radians(angle)
+        return [(x * math.cos(radian_angle) - y * math.sin(radian_angle),
+                x * math.sin(radian_angle) + y * math.cos(radian_angle))
+                for x, y in coords]
+        
+    def draw_lines(coords, scale=50, rotation_angle=270):
+        turtle.speed(1)  # Set the drawing speed (1 is slowest, 10 is fastest)
 
+        turtle.setup(width=800, height=600)  # Set the window size
 
+        rotated_coords = rotate_coords(coords, rotation_angle)
+        
+        turtle.setup(startx=2, starty=0)  # Set the starting position of the turtle
+        
+        for x, y in rotated_coords:
+            turtle.goto(x * scale, y * scale)
+            turtle.dot(5)  # Optional: Draw a dot at each coordinate
+
+        turtle.done()
+
+    # Example usage:
+    draw_lines(visited_pipes)
+
+    # PART 2
+    # All the coordinates that are to the right (or left, depending on where you start) until you find a pipe in the visited_pipes list
+    # For example, if you walk in a circle to the right, everything on the right until you reach the other end of the circle will be inside.
+    
+    
+    
       
 if __name__ == "__main__":
     # Record the start time
